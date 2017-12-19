@@ -1,0 +1,23 @@
+{
+	"name": "cnbeta-pwa",
+	"version": "1.0.0",
+	"private": true,
+	"license": "MIT",
+	"scripts": {
+		"postinstall": "run-p install:api install:web",
+		"install:api": "cd api && yarn",
+		"install:web": "cd web && yarn",
+
+		"start": "run-p start:api start:web",
+		"start:api": "npm run start --prefix api",
+		"start:web": "npm run start --prefix web",
+
+		"build": "run-p build:api build:web",
+		"build:api": "cd api && npm run build && cd ..",
+		"build:web": "cd web && npm run build && cd .."
+	},
+	"devDependencies": {
+		"npm-run-all": "^4.0.2",
+		"opn-cli": "^3.1.0"
+	}
+}
