@@ -5,8 +5,8 @@
 	"license": "MIT",
 	"scripts": {
 		"postinstall": "run-p install:api install:web",
-		"install:api": "cd api && yarn",
-		"install:web": "cd web && yarn",
+		"install:api": "cd api && npm install",
+		"install:web": "cd web && npm install",
 		"start": "run-p start:api start:web",
 		"start:api": "npm run start --prefix api",
 		"start:web": "npm run start --prefix web",
@@ -15,7 +15,7 @@
 		"build:web": "cd web && npm run build && cd .."
 	},
 	"devDependencies": {
-		"opn-cli": "^3.1.0",
+		"npm-run-all": "^4.1.2",
 		"yarn-run-all": "^3.1.1"
 	}
 }
