@@ -10,9 +10,9 @@
 		"start": "run-p start:api start:web",
 		"start:api": "npm run start --prefix api",
 		"start:web": "npm run start --prefix web",
-		"build": "run-p build:api build:web",
 		"build:api": "cd api && npm run build && cd ..",
-		"build:web": "cd web && npm run build && cd .."
+		"build:web": "cd web && npm run build && cd ..",
+		"publish": "npm run build:web && npm run start:api"
 	},
 	"devDependencies": {
 		"npm-run-all": "^4.1.2",
