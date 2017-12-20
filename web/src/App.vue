@@ -4,9 +4,11 @@
     <div class="title" @click="go({path: '/'})"><span>Cnbeta</span></div>
   </header>
   <div class="main">
-    <router-view></router-view>
+    <transition name="fade">
+      <router-view></router-view>
+    </transition>
   </div>
-  <footer>-- End --</footer>
+  <footer><a href="https://github.com/cyio/cnbeta-pwa" target="_blank">cyio/cnbeta-pwa</a></footer>
 </div>
 </template>
 
@@ -20,7 +22,6 @@ export default {
 
 <style>
 a {
-	color: #000;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0); 
 }
 
@@ -45,10 +46,16 @@ body {
 }
 
 #app {
+  // padding-top: 44px;
 }
 
 .main {
   padding: .1rem;
+	margin-top: .03rem;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  min-height: 500px;
+  box-sizing: 'border-box';
 }
 
 header {
@@ -58,6 +65,12 @@ header {
   padding: 0 .05rem;
   background-color: var(--theme);
   color: #ffffff;
+  // position: fixed;
+  // top: 0;
+  // width: 100%;
+  // z-index: 1000;
+  border-bottom: 1px solid #b2b2b2;
+  box-sizing: 'border-box';
 }
 
 header .title {
@@ -69,9 +82,30 @@ footer {
   text-align: center;
   padding: 15px 0 10px;
   color: #ccc;
+	// border-bottom: .1rem solid var(--theme);
 }
 
-img {
+footer a {
+  color: #bbb6b6;
+}
+
+img, embed {
   max-width: 100%;
+}
+
+.expand-enter-active, .expand-leave-active {
+  transition: all .3s ease;  /*padding: 10px;*/
+  overflow: hidden;
+}
+.expand-enter, .expand-leave-active {
+  height: 0;
+  padding: 0 5px;
+  opacity: 0;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .2s ease;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0;
 }
 </style>

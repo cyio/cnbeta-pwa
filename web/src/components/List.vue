@@ -54,11 +54,10 @@ export default {
   text-decoration: none;
   color: #333;
   display: block;
-  padding: 8px;
+  padding: .1rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-size: 14px;
 }
 .list .item .link:visited {
   color: #9a9a9a;
