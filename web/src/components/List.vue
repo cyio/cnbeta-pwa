@@ -5,15 +5,17 @@
   </div>
   <div class="list" v-else>
     <div class="item" v-for="item in data">
-      <a :href="item.url" :title="item.title" class="link">{{item.title}}</a>
+      <a @click="go({path: `/post/${item.id}`})" :title="item.title" class="link">{{item.title}}</a>
     </div>
   </div>
 </div>
 </template>
 
 <script>
+import mixin from '@/mixin.js'
 export default {
-  name: 'hello',
+  name: 'List',
+  mixins: [mixin],
   data () {
     return {
       data: null,
@@ -27,7 +29,13 @@ export default {
         this.data = data
         this.loading = false
       })
+    },
+    getPostId (url) {
+      const re = /view\/(\w*)\.htm/
+      return re.exec(url)[1]
     }
+  },
+  computed: {
   },
   created () {
     this.getData()
