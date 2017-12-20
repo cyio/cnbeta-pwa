@@ -5,7 +5,8 @@
   "author": "peco",
   "private": false,
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "build": "nodemon app.js"
   },
   "dependencies": {
     "axios": "^0.17.1",
