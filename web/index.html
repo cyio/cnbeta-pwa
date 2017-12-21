@@ -32,7 +32,10 @@
           document.addEventListener('DOMContentLoaded', function() {
               var html = document.documentElement;
               var windowWidth = html.clientWidth;
-              html.style.fontSize = windowWidth / 3.2 + 'px';
+              console.log(windowWidth)
+              html.style.fontSize = windowWidth < 750
+                ? windowWidth / 3.2 + 'px'
+                : '150px';
               // 等价于html.style.fontSize = windowWidth / 640 * 100 + 'px';
           }, false);
           var debug = localStorage.getItem('debug')

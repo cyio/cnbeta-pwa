@@ -42,15 +42,20 @@ ul {
 
 body {
   margin: 0;
-  font-size: .13rem;
+  font-size: .12rem;
 }
 
 #app {
   // padding-top: 44px;
 }
 
+
+p {
+  line-height: .22rem;
+}
+
 .main {
-  padding: .1rem;
+  // padding: .1rem;
 	margin-top: .03rem;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
@@ -60,8 +65,8 @@ body {
 
 header {
   margin: 0;
-  height: 44px;
-  line-height: 44px;
+  height: .44rem;
+  line-height: .44rem;
   padding: 0 .05rem;
   background-color: var(--theme);
   color: #ffffff;
@@ -74,8 +79,8 @@ header {
 }
 
 header .title {
-  font-size: 28px;
-	margin-left: 10px;
+  font-size: .28rem;
+	margin-left: .10rem;
 }
 
 footer {
@@ -103,9 +108,17 @@ img, embed {
   opacity: 0;
 }
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .2s ease;
+  transition: opacity .3s ease;
 }
 .fade-enter, .fade-leave-active {
   opacity: 0;
+}
+
+@media only screen and (min-width: 780px) {
+  #app {
+		width: 750px;
+		margin-left: 150px;
+		border: 1px solid #efefef;
+  }
 }
 </style>

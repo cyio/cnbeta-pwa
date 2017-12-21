@@ -37,7 +37,15 @@ export default {
 </script>
 
 <style>
+.post-view {
+  padding: .1rem;
+}
+
 .post-view .content {
   padding-top: .08rem;
+}
+
+.post-view .title {
+  font-size: .16rem;
 }
 </style>
