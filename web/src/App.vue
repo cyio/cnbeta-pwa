@@ -44,6 +44,7 @@ ul {
 
 :root {
 	--theme: #32669a;
+	--headerHeight: .44rem;
 }
 
 body {
@@ -52,7 +53,7 @@ body {
 }
 
 #app {
-  // padding-top: 44px;
+  padding-top: var(--headerHeight);
 }
 
 
@@ -71,15 +72,15 @@ p {
 
 header {
   margin: 0;
-  height: .44rem;
-  line-height: .44rem;
+  height: var(--headerHeight);
+  line-height: var(--headerHeight);
   padding: 0 .05rem;
   background-color: var(--theme);
   color: #ffffff;
-  // position: fixed;
-  // top: 0;
-  // width: 100%;
-  // z-index: 1000;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
   border-bottom: 1px solid #b2b2b2;
   box-sizing: 'border-box';
 }
@@ -124,11 +125,14 @@ img, embed {
   opacity: 0;
 }
 
-@media only screen and (min-width: 780px) {
-  #app {
+@media only screen and (min-width: 900px) {
+  #app .main {
 		width: 750px;
-		margin-left: 150px;
 		border: 1px solid #efefef;
+  }
+  #app .main,
+  #app header .title {
+		margin-left: 150px;
   }
 }
 </style>

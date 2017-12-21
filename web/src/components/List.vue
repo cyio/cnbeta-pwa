@@ -1,9 +1,9 @@
 <template>
 <div class="home-view">
   <div class="list">
-    <div class="item" v-for="item in list||appShellList">
+    <div class="item" v-for="item in list || appShellList">
       <a v-if="loading" class="link"><span class="placeholder"></span></a>
-      <a v-else @click="go({path: `/post/${item.id}`})" :title="item.title" class="link">{{item.title}}</a>
+      <a v-else @click="go({name: 'Post', params: { id: item.id }})" :title="item.title" class="link">{{item.title}}</a>
     </div>
   </div>
 </div>
@@ -33,13 +33,13 @@ export default {
       return list
     }
   },
-  beforeRouteEnter (to, from, next) {
-    fetch('/api/cnbeta').then(res => res.json()).then(data => {
-      next(vm => {
-        vm.list = data
-        vm.loading = false
+  created () {
+    if (this.$route.name !== 'Post') {
+      fetch('/api/cnbeta').then(res => res.json()).then(data => {
+        this.loading = false
+        this.list = data
       })
-    })
+    }
   },
   mounted () {
   }

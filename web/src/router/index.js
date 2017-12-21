@@ -2,6 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import List from '@/components/List'
 import Post from '@/components/Post'
+import ProgressBar from '@/components/ProgressBar'
+
+// global progress bar
+const bar = Vue.prototype.$bar = new Vue(ProgressBar).$mount()
+document.body.appendChild(bar.$el)
 
 Vue.use(Router)
 

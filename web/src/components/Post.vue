@@ -27,6 +27,7 @@ export default {
       next(vm => {
         vm.post = data
         vm.loading = false
+        vm.$bar.finish()
       })
     })
   },
