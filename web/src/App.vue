@@ -67,7 +67,6 @@ p {
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   min-height: 500px;
-  box-sizing: 'border-box';
 }
 
 header {
@@ -75,14 +74,14 @@ header {
   height: var(--headerHeight);
   line-height: var(--headerHeight);
   padding: 0 .05rem;
-  background-color: var(--theme);
-  color: #ffffff;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
   border-bottom: 1px solid #b2b2b2;
-  box-sizing: 'border-box';
+	background-color: #fff;
+	color: var(--theme);
+  box-shadow: 0 0 4px #657786;
 }
 
 header .title {
@@ -91,7 +90,7 @@ header .title {
 }
 
 header .title .sub {
-  color: #43779c;
+  color: #eee;
 }
 
 footer {
