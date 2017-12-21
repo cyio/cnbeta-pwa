@@ -1,11 +1,9 @@
 <template>
 <div class="home-view">
-  <div class="loading" v-if="loading">
-    loading...
-  </div>
-  <div class="list" v-else>
-    <div class="item" v-for="item in data">
-      <a @click="go({path: `/post/${item.id}`})" :title="item.title" class="link">{{item.title}}</a>
+  <div class="list">
+    <div class="item" v-for="item in data||appShellData">
+      <a v-if="loading" class="link"><span class="placeholder"></span></a>
+      <a v-else @click="go({path: `/post/${item.id}`})" :title="item.title" class="link">{{item.title}}</a>
     </div>
   </div>
 </div>
@@ -36,6 +34,11 @@ export default {
     }
   },
   computed: {
+    appShellData () {
+      const data = []
+      data.length = 25
+      return data
+    }
   },
   created () {
     this.getData()
@@ -45,22 +48,27 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .list .item {
   position: relative;
+	height: .35rem;
+	line-height: .35rem;
 }
 .list .item .link {
-  text-decoration: none;
   color: #333;
   display: block;
-  padding: .1rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-decoration: none;
+  padding: 0 .1rem;
 }
 .list .item .link:visited {
   color: #9a9a9a;
+}
+.list .link .placeholder {
+  background: red;
+  width: 100%;
 }
 .list .item:nth-child(2n+1) {
   background-color: #F5F5F5;

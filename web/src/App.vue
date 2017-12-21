@@ -42,7 +42,7 @@ ul {
 
 body {
   margin: 0;
-  font-size: .12rem;
+  font-size: .13rem;
 }
 
 #app {
