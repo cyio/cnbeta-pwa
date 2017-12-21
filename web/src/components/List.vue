@@ -1,7 +1,7 @@
 <template>
 <div class="home-view">
   <div class="list">
-    <div class="item" v-for="item in data||appShellData">
+    <div class="item" v-for="item in list||appShellList">
       <a v-if="loading" class="link"><span class="placeholder"></span></a>
       <a v-else @click="go({path: `/post/${item.id}`})" :title="item.title" class="link">{{item.title}}</a>
     </div>
@@ -16,32 +16,30 @@ export default {
   mixins: [mixin],
   data () {
     return {
-      data: null,
+      list: null,
       loading: true
     }
   },
   methods: {
-    getData () {
-      this.loading = true
-      fetch('/api/cnbeta').then(res => res.json()).then(data => {
-        this.data = data
-        this.loading = false
-      })
-    },
     getPostId (url) {
       const re = /view\/(\w*)\.htm/
       return re.exec(url)[1]
     }
   },
   computed: {
-    appShellData () {
-      const data = []
-      data.length = 25
-      return data
+    appShellList () {
+      const list = []
+      list.length = 25
+      return list
     }
   },
-  created () {
-    this.getData()
+  beforeRouteEnter (to, from, next) {
+    fetch('/api/cnbeta').then(res => res.json()).then(data => {
+      next(vm => {
+        vm.list = data
+        vm.loading = false
+      })
+    })
   },
   mounted () {
   }

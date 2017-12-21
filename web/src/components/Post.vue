@@ -4,8 +4,8 @@
     loading...
   </div>
   <div v-else>
-    <div class="title" v-html="data.title"></div>
-    <section class="content" v-html="data.content"></section>
+    <div class="title" v-html="post.title"></div>
+    <section class="content" v-html="post.content"></section>
   </div>
 </div>
 </template>
@@ -15,21 +15,20 @@ export default {
   name: 'Post',
   data () {
     return {
-      data: null,
+      post: null,
+      err: null,
       loading: true
     }
   },
   methods: {
-    getData () {
-      this.loading = true
-      fetch(`/api/cnbeta/${this.$route.params.id}`).then(res => res.json()).then(data => {
-        this.data = data
-        this.loading = false
-      })
-    }
   },
-  created () {
-    this.getData()
+  beforeRouteEnter (to, from, next) {
+    fetch(`/api/cnbeta/${to.params.id}`).then(res => res.json()).then(data => {
+      next(vm => {
+        vm.post = data
+        vm.loading = false
+      })
+    })
   },
   mounted () {
   }

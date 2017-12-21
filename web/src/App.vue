@@ -1,7 +1,10 @@
 <template>
 <div id="app">
   <header>
-    <div class="title" @click="go({path: '/'})"><span>Cnbeta</span></div>
+    <div class="title" @click="go({path: '/'})">
+        <span>Cnbeta</span>
+        <span class="sub">Lite</span>
+    </div>
   </header>
   <div class="main">
     <transition name="fade">
@@ -81,6 +84,10 @@ header {
 header .title {
   font-size: .28rem;
 	margin-left: .10rem;
+}
+
+header .title .sub {
+  color: #43779c;
 }
 
 footer {
