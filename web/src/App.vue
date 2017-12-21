@@ -7,8 +7,11 @@
     </div>
   </header>
   <div class="main">
-    <transition name="fade">
-      <router-view></router-view>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive" />
+    </keep-alive>
+    <transition name="fade"  v-if="!$route.meta.keepAlive">
+      <router-view />
     </transition>
   </div>
   <footer><a href="https://github.com/cyio/cnbeta-pwa" target="_blank">cyio/cnbeta-pwa</a></footer>
