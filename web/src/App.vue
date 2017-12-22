@@ -1,8 +1,8 @@
 <template>
 <div id="app">
   <header>
-    <div class="title" @click="go({path: '/'})">
-        <span>Cnbeta</span>
+    <div class="title link" @click="go({path: '/'})">
+        Cnbeta
         <span class="sub">Lite</span>
     </div>
   </header>
@@ -85,6 +85,7 @@ header {
 }
 
 header .title {
+  width: 1.6rem;
   font-size: .28rem;
 	margin-left: .10rem;
 }
@@ -133,5 +134,44 @@ img, embed {
   #app header .title {
 		margin-left: 150px;
   }
+}
+
+.link {
+	position: relative;
+	cursor: pointer;
+	transition: all 0.4s ease-in;
+}
+.link:before {
+	content: '';
+	background-color: aliceblue;
+	border-radius: 50%;
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+  transform: scale(0.001, 0.001);
+}
+.link:focus {
+	outline: 0;
+	color: #fff;
+}
+.link:focus:before {
+  animation: effect_dylan 0.8s ease-out;
+}
+@keyframes effect_dylan {
+	50% {
+    transform: scale(1.5, 1.5);
+		opacity: 0;
+	}
+	99% {
+    transform: scale(0.001, 0.001);
+		opacity: 0;
+	}
+	100% {
+    transform: scale(0.001, 0.001);
+		opacity: 1;
+	}
 }
 </style>

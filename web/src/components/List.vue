@@ -2,8 +2,8 @@
 <div class="home-view">
   <div class="list">
     <div class="item" v-for="item in list || appShellList">
-      <a v-if="loading" class="link"><span class="placeholder"></span></a>
-      <a v-else @click="go({name: 'Post', params: { id: item.id }})" :title="item.title" class="link">{{item.title}}</a>
+      <div v-if="loading" class="link"><span class="placeholder"></span></div>
+      <div v-else @click="go({name: 'Post', params: { id: item.id }})" :title="item.title" class="link">{{item.title}}</div>
     </div>
   </div>
 </div>
@@ -54,7 +54,6 @@ export default {
 }
 .list .item .link {
   color: #333;
-  display: block;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -71,4 +70,5 @@ export default {
 .list .item:nth-child(2n+1) {
   background-color: #F5F5F5;
 }
+
 </style>
