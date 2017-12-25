@@ -35,9 +35,11 @@ export default {
   },
   created () {
     if (this.$route.name !== 'Post') {
+      this.$bar.start()
       fetch('/api/cnbeta').then(res => res.json()).then(data => {
         this.loading = false
         this.list = data
+        this.$bar.finish()
       })
     }
   },
