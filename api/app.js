@@ -36,6 +36,7 @@ router.get('/api/cnbeta/:id', async (ctx, next) => {
       title: $('.title').html(),
       content: $('.content').html()
     }
+		data.content = data.content.replace(/(http)s:\/\/static/g, '$1://static')
     return data
   });
 });

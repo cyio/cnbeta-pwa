@@ -1,9 +1,8 @@
 <template>
 <div class="home-view">
   <div class="list">
-    <div class="item" v-for="item in list || appShellList">
-      <div v-if="loading" class="link"><span class="placeholder"></span></div>
-      <div v-else @click="go({name: 'Post', params: { id: item.id }})" :title="item.title" class="link">{{item.title}}</div>
+    <div class="item" v-for="item in list || skeletonList">
+      <div v-if="!loading" @click="go({name: 'Post', params: { id: item.id }})" :title="item.title" class="link">{{item.title}}</div>
     </div>
   </div>
 </div>
@@ -27,7 +26,7 @@ export default {
     }
   },
   computed: {
-    appShellList () {
+    skeletonList () {
       const list = []
       list.length = 25
       return list
