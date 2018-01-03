@@ -1,21 +1,23 @@
 {
-	"name": "cnbeta-pwa",
-	"version": "1.0.0",
-	"private": true,
-	"license": "MIT",
-	"scripts": {
-		"postinstall": "run-p install:api install:web",
-		"install:api": "cd api && npm install",
-		"install:web": "cd web && npm install",
-		"start": "run-p start:api start:web",
-		"start:api": "npm run start --prefix api",
-		"start:web": "npm run start --prefix web",
-		"build:api": "cd api && npm run build && cd ..",
-		"build:web": "cd web && npm run build && cd ..",
-		"publish": "npm run build:web && npm run start:api"
-	},
-	"devDependencies": {
-		"npm-run-all": "^4.1.2",
-		"yarn-run-all": "^3.1.1"
-	}
+  "name": "cnbeta-pwa",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "npm-run-all -p install:api install:web",
+    "install:api": "cd api && npm install",
+    "install:web": "cd web && npm install",
+    "start": "npm-run-all -p start:api start:web",
+    "start:api": "yarn --cwd api start ",
+    "start:web": "yarn --cwd web start",
+    "build:api": "cd api && npm run build && cd ..",
+    "build:web": "cd web && yarn build",
+    "publish": "npm run build:web && npm run start:api"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "dependencies": {
+    "npm-run-all": "*"
+  }
 }
