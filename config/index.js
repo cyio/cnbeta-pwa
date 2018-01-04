@@ -30,7 +30,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
+      '/cnbeta': {
         target: 'http://localhost:8081',
         changeOrigin: true
       }
