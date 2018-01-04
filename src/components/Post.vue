@@ -23,7 +23,7 @@ export default {
   methods: {
   },
   beforeRouteEnter (to, from, next) {
-    fetch(`/cnbeta/api/${to.params.id}`).then(res => res.json()).then(data => {
+    fetch(`/api/cnbeta/${to.params.id}`).then(res => res.json()).then(data => {
       next(vm => {
         vm.post = data
         vm.loading = false
