@@ -1,18 +1,16 @@
 const Koa = require('koa')
 const Router = require('koa-router')
-const Statics = require('koa-static')
+const statics = require('koa-static')
 const axios = require('axios')
 const cheerio = require('cheerio')
 const path = require('path')
 const url = require('url')
 const request = require('request')
+const history = require('koa2-connect-history-api-fallback')
 
 const app = new Koa()
 const router = new Router()
 const sourceUrl = 'http://m.cnbeta.com'
-
-app.use(Statics(path.join(__dirname, '../dist')))
-// router.get('/', async function(ctx) {})
 
 router.get('/api/cnbeta', async (ctx, next) => {
   ctx.body = await axios.get(sourceUrl + '/wap').then(res => {
@@ -42,7 +40,10 @@ router.get('/api/cnbeta/:id', async (ctx, next) => {
       content: $('.content').html(),
     }
     const urlPattern = /https?:\/\/static\.cnbetacdn.+?\.(jpe?g|png|webp|gif)/g
-    data.content = data.content.replace(urlPattern, str => `/api/image?url=${str}&srcUrl=http://m.cnbeta.com`)
+    data.content = data.content.replace(
+      urlPattern,
+      str => `/api/image?url=${str}&srcUrl=http://m.cnbeta.com`,
+    )
     return data
   })
 })
@@ -71,12 +72,16 @@ router.get('/api/image', (ctx, next) => {
     uri: imgUrl,
     headers: {
       Referer: referrer,
-    }
+    },
   }
 
   ctx.body = request(options)
 })
 
-app.use(router.routes()).use(router.allowedMethods())
+app
+  .use(router.routes())
+  .use(router.allowedMethods())
+  .use(history({whkteList: ['/api']}))
+  .use(statics(path.join(__dirname, '../dist')))
 
 module.exports = app

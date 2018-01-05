@@ -105,7 +105,7 @@ footer a {
   color: #bbb6b6;
 }
 
-img, embed {
+img, embed, iframe {
   max-width: 100%;
 }
 
