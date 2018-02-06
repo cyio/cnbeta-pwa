@@ -16,7 +16,7 @@ yarn
 
 本地开发启动后端
 ```sh
-lean up --port 8081
+lean up
 ```
 或者不使用 leancloud
 ```sh

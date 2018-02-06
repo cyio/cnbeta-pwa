@@ -10,7 +10,7 @@ cache:
 before_install:
 - git config --global user.name "cyio"
 - git config --global user.email "ibeceo@gmail.com"
-- git clone --branch gh-pages https://github.com/cyio/cnbeta-pwa.org.git dist
+- git clone --branch gh-pages https://github.com/cyio/cnbeta-pwa.git dist
 install:
 - npm install
 script:
@@ -24,3 +24,4 @@ after_script:
 env:
   global:
   - GH_REF: github.com/cyio/cnbeta-pwa.git
+  - secure: RLO3KqjqZFC6nJUMyEyxIt+SnHzCqpXDz2Qc8ZSnUdkC1m5TRqJ4FfBEuZbhRP3vmGh5qqi+utP31xKHPWh/MoOuuPmvLVWn0RSOHR9Af4wDYVKlQEQ69pSoBH8DhnIYXnIz/LiMxqyYcUlPcuehi8vgSSjXISi1nwNQEuyOaCGz+rYjtwH/dQDoioSXeQ4VanIpXouRTN45D1PKUqiy/OYPB10vhirnFE2RLtYkz0ZHeQmI2oJZCw/S45bgLJDdhN/ZjmkUFxERoJ+KNYpl9Op9fS7eVF4DWwZXgm8/nZ6hddsYUbho0i1Rcb4VrTaI6UJVp8wiAv73K2JfyXg1FKBf4fOIWkkoDjgl2twI4p/ejHEehhCG8yAU/tVw+dCxd9GpBEn0ZumN+1HZAI2ScK8ZZvHppLH0ySFw321Lm5xUxsDlo5ZoTeicxZYLB+WgdlqK5w+lr4IJOJ3iIPexuZ+IEytUADmbagH0UT9oKgJA4i9JSj02POmd3QpGDOiuQjrOCQXjLqoX1jLyo2VoEKQAxgZLovxCg3HxaResbTwcRZUMVdy9wMrkrpnQzyQqjqlIuXldQ0pctSbUJ/YPJiM3ByUxPWTT8QmEtRKh26UvGU0igDR8MGoyS8KDfXjY5Bj22nEjYnytNXmpYpk3mU0VjoW/8WZ4xXwrgT1eVP0=
