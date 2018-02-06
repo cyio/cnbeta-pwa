@@ -1,0 +1,26 @@
+branches:
+  only:
+  - master
+language: node_js
+sudo: false
+node_js: stable
+cache:
+  directories:
+  - node_modules
+before_install:
+- git config --global user.name "cyio"
+- git config --global user.email "ibeceo@gmail.com"
+- git clone --branch gh-pages https://github.com/cyio/cnbeta-pwa.org.git dist
+install:
+- npm install
+script:
+- npm run build
+after_script:
+- cd dist
+- cp index.html 404.html
+- git add --all .
+- git commit --message "auto deploy"
+- git push "https://cyio:${GITHUB_TOKEN}@${GH_REF}" gh-pages:gh-pages
+env:
+  global:
+  - GH_REF: github.com/cyio/cnbeta-pwa.git
