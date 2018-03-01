@@ -5,7 +5,6 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 const path = require('path')
 const url = require('url')
-const request = require('request')
 const history = require('koa2-connect-history-api-fallback')
 
 const app = new Koa()
@@ -60,7 +59,7 @@ function getHostName(uri) {
   return parsedUrl.protocol + '//' + parsedUrl.host
 }
 
-router.get('/api/image', (ctx, next) => {
+router.get('/api/image', async (ctx, next) => {
   const query = url.parse(ctx.req.url, true).query
   const imgUrl = query.url
 
@@ -68,14 +67,17 @@ router.get('/api/image', (ctx, next) => {
   if (!imgUrl) return ctx.throw(400, 'image url required')
 
   const referrer = getHostName(query.srcUrl) || getHostName(imgUrl)
-  const options = {
-    uri: imgUrl,
+  const config = {
+    method: 'get',
+    url: imgUrl,
     headers: {
       Referer: referrer,
     },
+		responseType:'stream'
   }
 
-  ctx.body = request(options)
+  ctx.body = await axios(config).then(res => res.data)
+  // console.log(typeof ctx.body)
 })
 
 app
