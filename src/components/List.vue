@@ -35,11 +35,20 @@ export default {
   created () {
     if (this.$route.name !== 'Post') {
       this.$bar.start()
-      fetch('/api/cnbeta').then(res => res.json()).then(data => {
-        this.loading = false
-        this.list = data
-        this.$bar.finish()
-      })
+      fetch('/api/cnbeta')
+        .then(async res => {
+          if (res.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' + res.status)
+            return
+          }
+
+          this.list = await res.json()
+          this.loading = false
+          this.$bar.finish()
+        })
+        .catch(err => {
+          console.log('Fetch Error :-S', err)
+        })
     }
   },
   mounted () {

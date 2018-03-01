@@ -23,13 +23,19 @@ export default {
   methods: {
   },
   beforeRouteEnter (to, from, next) {
-    fetch(`/api/cnbeta/${to.params.id}`).then(res => res.json()).then(data => {
-      next(vm => {
-        vm.post = data
-        vm.loading = false
-        vm.$bar.finish()
+    fetch(`/api/cnbeta/${to.params.id}`)
+      .then(res => {
+        if (res.status !== 200) {
+          console.log('Looks like there was a problem. Status Code: ' + res.status)
+          return
+        }
+
+        next(async vm => {
+          vm.post = await res.json()
+          vm.loading = false
+          vm.$bar.finish()
+        })
       })
-    })
   },
   mounted () {
   }

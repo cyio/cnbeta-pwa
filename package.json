@@ -5,7 +5,7 @@
   "author": "cyio <icaner@qq.com>",
   "private": true,
   "scripts": {
-    "dev": "nodemon server",
+    "dev": "nodemon --watch server --inspect server/index.js",
     "dev:web": "node build/dev-server.js",
     "start": "node server",
     "build": "node build/build.js",
