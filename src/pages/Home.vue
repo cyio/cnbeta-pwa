@@ -10,6 +10,10 @@
 
 <script>
 import mixin from '@/mixin.js'
+import axios from 'axios'
+axios.defaults.timeout = 1000 * 5
+let fetchCount = 0
+const maxFetchTimes = 3
 export default {
   name: 'List',
   mixins: [mixin],
@@ -22,6 +26,25 @@ export default {
     getPostId (url) {
       const re = /view\/(\w*)\.htm/
       return re.exec(url)[1]
+    },
+    getList () {
+      fetchCount++
+      return axios.get('/api/cnbeta')
+        .then(async res => {
+          if (res.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' + res.status)
+            return
+          }
+
+          this.list = res.data
+          this.hideLoading()
+        })
+        .catch(err => {
+          console.log('Fetch Error :-S', err)
+          if (fetchCount < maxFetchTimes) {
+            this.getList()
+          }
+        })
     }
   },
   computed: {
@@ -33,24 +56,18 @@ export default {
   },
   created () {
     if (this.$route.name !== 'Post') {
-      console.time('fetch list')
-      fetch('/api/cnbeta')
-        .then(async res => {
-          console.timeEnd('fetch list')
-          console.time('parse json')
-          if (res.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' + res.status)
-            return
-          }
-
-          this.list = await res.json()
-          console.timeEnd('parse json')
-          this.hideLoading()
-        })
-        .catch(err => {
-          console.log('Fetch Error :-S', err)
-        })
+      this.getList()
     }
+
+    // exit app when user press back button in pwa standalone mode
+    window.document.addEventListener('backbutton', function (ev) {
+      window.onpopstate = function (event) {
+        if ('app' in window.navigator) {
+          window.navigator.app.exitApp()
+        }
+      }
+      ev.preventDefault ? ev.preventDefault() : (ev.returnValue = false)
+    })
   },
   mounted () {
   }

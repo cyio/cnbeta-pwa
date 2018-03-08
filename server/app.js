@@ -28,7 +28,7 @@ router.get('/api/cnbeta', async (ctx, next) => {
         url: postUrl,
       })
     })
-    // await sleep(1000 * 60)
+    await sleep(1000 * 0.5)
     return data
   })
 })
