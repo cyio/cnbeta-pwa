@@ -22,7 +22,8 @@
     "leanengine": "^3.0.2",
     "request": "^2.83.0",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-simple-spinner": "^1.2.8"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.5",

@@ -10,9 +10,12 @@ const history = require('koa2-connect-history-api-fallback')
 const app = new Koa()
 const router = new Router()
 const sourceUrl = 'http://m.cnbeta.com'
+function sleep(ms = 0) {
+	return new Promise((resolve, reject) => setTimeout(resolve, ms));
+}
 
 router.get('/api/cnbeta', async (ctx, next) => {
-  ctx.body = await axios.get(sourceUrl + '/wap').then(res => {
+  ctx.body = await axios.get(sourceUrl + '/wap').then(async res => {
     const $ = cheerio.load(res.data)
     const data = []
     $('.list > a').each((index, value) => {
@@ -25,6 +28,7 @@ router.get('/api/cnbeta', async (ctx, next) => {
         url: postUrl,
       })
     })
+    // await sleep(1000 * 60)
     return data
   })
 })

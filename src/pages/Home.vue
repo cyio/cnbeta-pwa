@@ -2,7 +2,7 @@
 <div class="home-view">
   <div class="list">
     <div class="item" v-for="item in list || skeletonList">
-      <div v-if="!loading" @click="go({name: 'Post', params: { id: item.id }})" :title="item.title" class="link">{{item.title}}</div>
+      <div @click="go({name: 'Post', params: { id: item.id }})" :title="item.title" class="link"  v-if="!loading">{{item.title}}</div>
     </div>
   </div>
 </div>
@@ -15,8 +15,7 @@ export default {
   mixins: [mixin],
   data () {
     return {
-      list: null,
-      loading: true
+      list: null
     }
   },
   methods: {
@@ -34,17 +33,19 @@ export default {
   },
   created () {
     if (this.$route.name !== 'Post') {
-      this.$bar.start()
+      console.time('fetch list')
       fetch('/api/cnbeta')
         .then(async res => {
+          console.timeEnd('fetch list')
+          console.time('parse json')
           if (res.status !== 200) {
             console.log('Looks like there was a problem. Status Code: ' + res.status)
             return
           }
 
           this.list = await res.json()
-          this.loading = false
-          this.$bar.finish()
+          console.timeEnd('parse json')
+          this.hideLoading()
         })
         .catch(err => {
           console.log('Fetch Error :-S', err)
@@ -59,8 +60,9 @@ export default {
 <style>
 .list .item {
   position: relative;
-	height: .35rem;
-	line-height: .35rem;
+	height: 2.5rem;
+	line-height: 2.5rem;
+  padding: 0 .8rem;
 }
 .list .item .link {
   color: #333;
@@ -68,7 +70,6 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   text-decoration: none;
-  padding: 0 .1rem;
 }
 .list .item .link:visited {
   color: #9a9a9a;
@@ -80,5 +81,4 @@ export default {
 .list .item:nth-child(2n+1) {
   background-color: #F5F5F5;
 }
-
 </style>

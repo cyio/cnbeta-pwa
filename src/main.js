@@ -6,9 +6,16 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+const shared = {
+  loading: true
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  data: {
+    shared
+  },
   router,
   template: '<App/>',
   components: { App }

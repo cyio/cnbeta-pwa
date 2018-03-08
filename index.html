@@ -26,8 +26,15 @@
         for (var file of chunk.files) {
           if (file.match(/\.(js|css)$/)) { %>
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
+    </script>
 		<link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap-reboot.min.css" rel="stylesheet">
 		<script type="text/javascript">
+      ;(function () {
+        var src = '//cdn.bootcss.com/eruda/1.4.3/eruda.min.js';
+        if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
+        document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+        document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
+      })();
 		</script>
   </head>
   <body>

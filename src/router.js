@@ -1,14 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import List from '@/components/List'
-import Post from '@/components/Post'
-import ProgressBar from '@/components/ProgressBar'
-
-// global progress bar
-const bar = Vue.prototype.$bar = new Vue(ProgressBar).$mount()
-document.body.appendChild(bar.$el)
+import Home from '@/pages/Home'
+import Post from '@/pages/Post'
+import Spinner from 'vue-simple-spinner'
 
 Vue.use(Router)
+Vue.component('Spinner', Spinner)
 
 export default new Router({
   mode: 'history',
@@ -29,8 +26,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'List',
-      component: List,
+      name: 'Home',
+      component: Home,
       meta: { keepAlive: true }
     },
     {

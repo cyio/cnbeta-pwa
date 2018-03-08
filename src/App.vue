@@ -15,6 +15,9 @@
     </transition>
   </div>
   <footer><a href="https://github.com/cyio/cnbeta-pwa" target="_blank">cyio/cnbeta-pwa</a></footer>
+  <div class="loading" v-if="loading">
+    <Spinner line-fg-color="#32669a"></Spinner>
+  </div>
 </div>
 </template>
 
@@ -29,6 +32,7 @@ export default {
 <style>
 a {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0); 
+	text-decoration-line: none;
 }
 
 input,textarea{
@@ -44,50 +48,41 @@ ul {
 
 :root {
 	--theme: #32669a;
-	--headerHeight: .44rem;
+	--headerHeight: 3rem;
 }
 
 body {
   margin: 0;
-  font-size: .13rem;
 }
 
 #app {
-  padding-top: var(--headerHeight);
-}
-
-
-p {
-  line-height: .22rem;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 100%;
+  // font-size: .9rem;
 }
 
 .main {
-  // padding: .1rem;
-	margin-top: .03rem;
+	// margin-top: .3rem;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   min-height: 500px;
 }
 
 header {
-  margin: 0;
-  height: var(--headerHeight);
-  line-height: var(--headerHeight);
-  padding: 0 .05rem;
-  position: fixed;
-  top: 0;
-  width: 100%;
   z-index: 1000;
-  border-bottom: 1px solid #b2b2b2;
-	background-color: #fff;
-	color: var(--theme);
+  background-color: #fff;
+  color: var(--theme);
   box-shadow: 0 0 4px #657786;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
 }
 
 header .title {
-  width: 1.6rem;
-  font-size: .28rem;
-	margin-left: .10rem;
+  font-size: 2rem;
 }
 
 header .title .sub {
@@ -139,7 +134,8 @@ img, embed, iframe {
 .link {
 	position: relative;
 	cursor: pointer;
-	transition: all 0.4s ease-in;
+	transition: all 0.2s ease-in;
+  -webkit-user-select: none;
 }
 .link:before {
 	content: '';
@@ -173,5 +169,14 @@ img, embed, iframe {
     transform: scale(0.001, 0.001);
 		opacity: 1;
 	}
+}
+.loading {
+  // margin-top: 50%;
+  text-align: center;
+  line-height: 2.5rem;
+  position: fixed;
+  top: .5rem;
+  right: 1rem;
+  z-index: 9999;
 }
 </style>

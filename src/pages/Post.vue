@@ -1,9 +1,6 @@
 <template>
 <div class="post-view">
-  <div class="loading" v-if="loading">
-    loading...
-  </div>
-  <div v-else>
+  <div v-if="!loading">
     <div class="title" v-html="post.title"></div>
     <section class="content" v-html="post.content"></section>
   </div>
@@ -11,13 +8,14 @@
 </template>
 
 <script>
+import mixin from '@/mixin.js'
 export default {
   name: 'Post',
+  mixins: [mixin],
   data () {
     return {
       post: null,
-      err: null,
-      loading: true
+      err: null
     }
   },
   methods: {
@@ -32,8 +30,7 @@ export default {
 
         next(async vm => {
           vm.post = await res.json()
-          vm.loading = false
-          vm.$bar.finish()
+          vm.hideLoading()
         })
       })
   },
@@ -44,14 +41,14 @@ export default {
 
 <style>
 .post-view {
-  padding: .1rem;
+  padding: .8rem;
 }
 
 .post-view .content {
-  padding-top: .08rem;
+  padding-top: .8rem;
 }
 
 .post-view .title {
-  font-size: .16rem;
+  font-size: 1.3rem;
 }
 </style>
