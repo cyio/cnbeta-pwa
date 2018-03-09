@@ -1,8 +1,9 @@
 <template>
 <div class="home-view">
+  <div v-if="msg" class="msg">{{msg}}</div>
   <div class="list">
     <div class="item" v-for="item in list || skeletonList">
-      <div @click="go({name: 'Post', params: { id: item.id }})" :title="item.title" class="link"  v-if="!loading">{{item.title}}</div>
+      <div @click="go({name: 'Post', params: { id: item.id }})" :title="item.title" class="link"  v-if="list">{{item.title}}</div>
     </div>
   </div>
 </div>
@@ -11,15 +12,16 @@
 <script>
 import mixin from '@/mixin.js'
 import axios from 'axios'
-axios.defaults.timeout = 1000 * 5
+// axios.defaults.timeout = 1000 * 5
 let fetchCount = 0
-const maxFetchTimes = 3
+const maxFetchTimes = 10
 export default {
   name: 'List',
   mixins: [mixin],
   data () {
     return {
-      list: null
+      list: null,
+      msg: null
     }
   },
   methods: {
@@ -27,22 +29,28 @@ export default {
       const re = /view\/(\w*)\.htm/
       return re.exec(url)[1]
     },
-    getList () {
+    getList (timeoutMs = 5000) {
       fetchCount++
-      return axios.get('/api/cnbeta')
-        .then(async res => {
-          if (res.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' + res.status)
-            return
-          }
-
+      return axios.get('/api/cnbeta', { timeout: timeoutMs })
+        .then(res => {
           this.list = res.data
+          this.msg = null
           this.hideLoading()
         })
         .catch(err => {
           console.log('Fetch Error :-S', err)
-          if (fetchCount < maxFetchTimes) {
-            this.getList()
+          if (err.status === 400) {
+            console.log('Looks like there was a problem. Status Code: ' + err.status)
+            this.msg = `${err.status}: ${err.message}`
+            return
+          }
+
+          if (fetchCount <= maxFetchTimes) {
+            this.msg = `服务器连接超时，正在重试(${fetchCount})`
+            this.getList(1000)
+          } else {
+            this.msg = '服务器连接失败, 请稍后再访问'
+            this.hideLoading()
           }
         })
     }
@@ -97,5 +105,10 @@ export default {
 }
 .list .item:nth-child(2n+1) {
   background-color: #F5F5F5;
+}
+.home-view .msg {
+  text-align: center;
+  padding: 10px;
+  background: aliceblue;
 }
 </style>
