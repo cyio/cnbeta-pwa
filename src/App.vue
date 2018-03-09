@@ -1,10 +1,11 @@
 <template>
 <div id="app">
   <header>
-    <div class="title link" @click="go({path: '/'})">
+    <div v-if="$route.name === 'Home'" class="title link" @click="go({path: '/'})">
         Cnbeta
         <span class="sub">Lite</span>
     </div>
+    <div v-else @click="goBack">返回</div>
   </header>
   <div class="main">
     <keep-alive>
@@ -61,6 +62,7 @@ body {
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 100%;
   // font-size: .9rem;
+  padding-top: 3rem;
 }
 
 .main {
@@ -79,6 +81,9 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 0 1.5rem;
+  height: 3rem;
+  position: fixed;
+  width: 100%;
 }
 
 header .title {
@@ -134,7 +139,6 @@ img, embed, iframe {
 .link {
 	position: relative;
 	cursor: pointer;
-	transition: all 0.2s ease-in;
   -webkit-user-select: none;
 }
 .link:before {
