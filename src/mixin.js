@@ -10,8 +10,8 @@ export default {
       }
       this.$router.push(path)
     },
-    goBack () {
-      this.$router.go(-1)
+    goHome () {
+      this.$router.push({ path: '/' })
     },
     showLoading () {
       this.$root.$data.shared.loading = true

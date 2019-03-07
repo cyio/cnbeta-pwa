@@ -1,12 +1,9 @@
-<template>
-<div class="home-view">
-  <div v-if="msg" class="msg">{{msg}}</div>
-  <div class="list">
-    <div class="item" v-for="item in list || skeletonList">
-      <div @click="go({name: 'Post', params: { id: item.id }})" :title="item.title" class="link"  v-if="list">{{item.title}}</div>
-    </div>
-  </div>
-</div>
+<template lang="pug">
+.home-view
+  .msg(v-if='msg') {{msg}}
+  .list
+    .item(v-for='item in list || skeletonList')
+      .link(@click="go({name: 'Post', params: { id: item.id }})", :title='item.title', v-if='list') {{item.title}}
 </template>
 
 <script>
@@ -14,7 +11,7 @@ import mixin from '@/mixin.js'
 import axios from 'axios'
 // axios.defaults.timeout = 1000 * 5
 let fetchCount = 0
-const maxFetchTimes = 10
+const maxFetchTimes = 15
 export default {
   name: 'List',
   mixins: [mixin],
@@ -47,7 +44,7 @@ export default {
 
           if (fetchCount <= maxFetchTimes) {
             this.msg = `服务器连接超时，正在重试(${fetchCount})`
-            this.getList(1000)
+            this.getList(1500)
           } else {
             this.msg = '服务器连接失败, 请稍后再访问'
             this.hideLoading()
@@ -82,7 +79,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus">
 .list .item {
   position: relative;
 	height: 2.5rem;

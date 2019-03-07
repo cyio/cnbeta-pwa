@@ -1,36 +1,50 @@
-<template>
-<div id="app">
-  <header>
-    <div v-if="$route.name === 'Home'" class="title link" @click="go({path: '/'})">
-        Cnbeta
-        <span class="sub">Lite</span>
-    </div>
-    <div v-else @click="goBack">返回</div>
-  </header>
-  <div class="main">
-    <keep-alive>
-      <router-view v-if="$route.meta.keepAlive" />
-    </keep-alive>
-    <transition name="fade"  v-if="!$route.meta.keepAlive">
-      <router-view />
-    </transition>
-  </div>
-  <footer><a href="https://github.com/cyio/cnbeta-pwa" target="_blank">cyio/cnbeta-pwa</a></footer>
-  <div class="loading" v-if="loading">
-    <Spinner line-fg-color="#32669a"></Spinner>
-  </div>
-</div>
+<template lang="pug">
+#app
+  header
+    .left
+      .title.link(v-if="$route.name === 'Home'", @click="go({path: '/'})")
+        | Cnbeta
+        span.sub Lite
+      .link(v-else='', @click='goHome') 返回
+    .right
+      .link(v-if="isSupportWebShare && !loading", @click='share') 分享
+    .loading(v-if='loading')
+      spinner(line-fg-color='#32669a')
+  .main
+    keep-alive
+      router-view(v-if='$route.meta.keepAlive')
+    transition(name='fade', v-if='!$route.meta.keepAlive')
+      router-view
+  footer
+    a(href='https://github.com/cyio/cnbeta-pwa', target='_blank') cyio/cnbeta-pwa
 </template>
 
 <script>
 import mixin from '@/mixin.js'
 export default {
   mixins: [mixin],
-  name: 'app'
+  name: 'app',
+  methods: {
+    share () {
+      navigator
+        .share({
+          title: window.document.title,
+          text: '',
+          url: window.location.href
+        })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error))
+    }
+  },
+  computed: {
+    isSupportWebShare () {
+      return navigator.share
+    }
+  }
 }
 </script>
 
-<style>
+<style lang="stylus">
 a {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0); 
 	text-decoration-line: none;
@@ -63,27 +77,30 @@ body {
   grid-template-columns: 100%;
   // font-size: .9rem;
   padding-top: 3rem;
+  background: #c5c0c0;
 }
 
 .main {
 	// margin-top: .3rem;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  border: 1px solid #efefef;
   min-height: 500px;
+  background: #fff;
 }
 
 header {
   z-index: 1000;
   background-color: #fff;
   color: var(--theme);
-  box-shadow: 0 0 4px #657786;
+  // box-shadow: 0 0 4px #657786;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1.5rem;
   height: 3rem;
   position: fixed;
+  top: 0;
   width: 100%;
+  border: 1px solid #d0d0d0;
 }
 
 header .title {
@@ -126,13 +143,10 @@ img, embed, iframe {
 }
 
 @media only screen and (min-width: 900px) {
-  #app .main {
-		width: 750px;
-		border: 1px solid #efefef;
-  }
   #app .main,
-  #app header .title {
-		margin-left: 150px;
+  #app header {
+    width: 750px;
+    margin-left: 150px;
   }
 }
 
@@ -178,7 +192,7 @@ img, embed, iframe {
   // margin-top: 50%;
   text-align: center;
   line-height: 2.5rem;
-  position: fixed;
+  position: absolute;
   top: .5rem;
   right: 1rem;
   z-index: 9999;

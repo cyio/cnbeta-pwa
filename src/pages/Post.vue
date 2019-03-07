@@ -1,10 +1,8 @@
-<template>
-<div class="post-view">
-  <div v-if="!loading">
-    <div class="title" v-html="post.title"></div>
-    <section class="content" v-html="post.content"></section>
-  </div>
-</div>
+<template lang="pug">
+.post-view
+  div(v-if='!loading')
+    .title(v-html='post.title')
+    section.content(v-html='post.content')
 </template>
 
 <script>
@@ -34,12 +32,19 @@ export default {
         })
       })
   },
-  mounted () {
+  watch: {
+    loading (value) {
+      if (!value) {
+        setTimeout(() => {
+          document.title = document.querySelector('.post-view .title').innerText
+        }, 0)
+      }
+    }
   }
 }
 </script>
 
-<style>
+<style lang="stylus">
 .post-view {
   padding: .8rem;
 }
