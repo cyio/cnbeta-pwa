@@ -36,7 +36,7 @@ export default {
         })
         .catch(err => {
           console.log('Fetch Error :-S', err)
-          if (err.status === 400) {
+          if (/400|503/.test(err.status)) {
             console.log('Looks like there was a problem. Status Code: ' + err.status)
             this.msg = `${err.status}: ${err.message}`
             return
