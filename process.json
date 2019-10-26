@@ -1,0 +1,11 @@
+{
+	"name": "cnbeta-backend",
+	"script": "./server/index.js",
+	"cwd":"./",
+	"watch":[
+		"server"
+	],
+	"ignore_watch" : [
+	],
+	"max_memory_restart": "100M"
+}
