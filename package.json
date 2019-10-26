@@ -9,6 +9,7 @@
     "dev:web": "node build/dev-server.js",
     "start": "node server",
     "build": "node build/build.js",
+    "prepublish": "yarn build",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
