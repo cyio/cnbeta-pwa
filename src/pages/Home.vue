@@ -1,6 +1,6 @@
 <template lang="pug">
 .home-view
-  .msg(v-if='msg') {{msg}}
+  .msg(v-if='msg' @click="handleMsgClick") {{msg}}
   .list
     .item(v-for='item in list || skeletonList')
       .link(@click="go({name: 'Post', params: { id: item.id }})", :title='item.title', v-if='list') {{item.title}}
@@ -9,6 +9,7 @@
 <script>
 import mixin from '@/mixin.js'
 import axios from 'axios'
+import { handleBackButton } from '../utils'
 // axios.defaults.timeout = 1000 * 5
 let fetchCount = 0
 const maxFetchTimes = 15
@@ -17,8 +18,9 @@ export default {
   mixins: [mixin],
   data () {
     return {
-      list: null,
-      msg: null
+      list: [],
+      listNew: [],
+      msg: ''
     }
   },
   methods: {
@@ -30,11 +32,11 @@ export default {
       fetchCount++
       return axios.get('/api/cnbeta', { timeout: timeoutMs })
         .then(res => {
-          this.list = res.data
           this.msg = null
           this.hideLoading()
+          return res.data
         })
-        .catch(err => {
+        .catch(async err => {
           console.log('Fetch Error :-S', err)
           if (/400|503/.test(err.status)) {
             console.log('Looks like there was a problem. Status Code: ' + err.status)
@@ -44,12 +46,31 @@ export default {
 
           if (fetchCount <= maxFetchTimes) {
             this.msg = `服务器连接超时，正在重试(${fetchCount})`
-            this.getList(1500)
+            this.list = await this.getList(1500)
           } else {
             this.msg = '服务器连接失败, 请稍后再访问'
             this.hideLoading()
           }
         })
+    },
+    async handleVisibilityChange () {
+      if (!document.hidden) {
+        this.listNew = await this.getList()
+        const isDiff = (this.list.length && this.listNew.length) && this.list[0].id !== this.listNew[0].id
+        if (isDiff) {
+          this.handleDiff()
+        }
+      }
+    },
+    handleMsgClick () {
+    },
+    handleDiff () {
+      this.msg = '有新内容，点击或下拉刷新'
+      this.handleMsgClick = () => {
+        this.list = this.listNew
+        this.msg = ''
+        alert('update')
+      }
     }
   },
   computed: {
@@ -59,20 +80,13 @@ export default {
       return list
     }
   },
-  created () {
+  async created () {
     if (this.$route.name !== 'Post') {
-      this.getList()
+      this.list = await this.getList()
     }
 
-    // exit app when user press back button in pwa standalone mode
-    window.document.addEventListener('backbutton', function (ev) {
-      window.onpopstate = function (event) {
-        if ('app' in window.navigator) {
-          window.navigator.app.exitApp()
-        }
-      }
-      ev.preventDefault ? ev.preventDefault() : (ev.returnValue = false)
-    })
+    handleBackButton()
+    document.addEventListener('visibilitychange', this.handleVisibilityChange, false)
   },
   mounted () {
   }
@@ -105,7 +119,16 @@ export default {
 }
 .home-view .msg {
   text-align: center;
-  padding: 10px;
-  background: aliceblue;
+  padding: 5px 10px;
+  // background: aliceblue;
+  background: #e6e620;
+  z-index: 1;
+  position: fixed;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid #d4b418;
+  width: 70%;
+  opacity: .9;
 }
 </style>
