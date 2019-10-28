@@ -7,8 +7,8 @@
   "scripts": {
     "dev": "nodemon --watch server --inspect server/index.js",
     "dev:web": "node build/dev-server.js",
-    "start": "git clone --branch gh-pages --depth 1 https://github.com/cyio/cnbeta-pwa.git dist && node server",
-    "build": "node build/build.js",
+    "start": "rm -rf dist && git clone --branch gh-pages --depth 1 https://github.com/cyio/cnbeta-pwa.git dist && node server",
+    "build": "node build/build.js --no-clean",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {

@@ -55,9 +55,11 @@ export default {
     },
     async handleVisibilityChange () {
       if (!document.hidden) {
-        this.listNew = await this.getList()
-        const isDiff = (this.list.length && this.listNew.length) && this.list[0].id !== this.listNew[0].id
-        if (isDiff) {
+        const listRes = await this.getList()
+        if (!listRes || !listRes.length) return
+        this.listNew = listRes
+        const isDiff = this.list[0].id !== this.listNew[0].id
+        if (1 || isDiff) {
           this.handleDiff()
         }
       }
@@ -69,7 +71,7 @@ export default {
       this.handleMsgClick = () => {
         this.list = this.listNew
         this.msg = ''
-        alert('update')
+        this.$nextTick(() => window.scrollTo(0, 0))
       }
     }
   },
