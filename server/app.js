@@ -22,11 +22,13 @@ router.get('/api/cnbeta', async (ctx, next) => {
       const dom = $(value)
       const re = /view\/(\w*)\.htm/
       const postUrl = sourceUrl + dom.attr('href')
-      data.push({
-        id: re.exec(postUrl)[1],
-        title: dom.text(),
-        url: postUrl,
-      })
+      if (re.test(postUrl)) { // 过滤不符合规则地址，如广告
+        data.push({
+          id: re.exec(postUrl)[1],
+          title: dom.text(),
+          url: postUrl,
+        })
+      }
     })
     // await sleep(1000 * 5)
     return data

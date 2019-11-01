@@ -13,12 +13,16 @@ import { handleBackButton } from '../utils'
 // axios.defaults.timeout = 1000 * 5
 let fetchCount = 0
 const maxFetchTimes = 15
+const inSleepTime = () => {
+  const h = new Date().getHours()
+  return h >= 0 && h <= 5
+}
 export default {
   name: 'List',
   mixins: [mixin],
   data () {
     return {
-      list: [],
+      list: null,
       listNew: [],
       msg: ''
     }
@@ -29,6 +33,11 @@ export default {
       return re.exec(url)[1]
     },
     getList (timeoutMs = 5000) {
+      if (inSleepTime()) {
+        this.msg = '应用休眠中，服务时间 6:00 - 24:00'
+        this.hideLoading()
+        return
+      }
       fetchCount++
       return axios.get('/api/cnbeta', { timeout: timeoutMs })
         .then(res => {
@@ -119,18 +128,18 @@ export default {
 .list .item:nth-child(2n+1) {
   background-color: #F5F5F5;
 }
+.home-view {
+  position: relative;
+}
 .home-view .msg {
   text-align: center;
   padding: 5px 10px;
-  // background: aliceblue;
   background: #e6e620;
   z-index: 1;
-  position: fixed;
-  top: 48px;
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
   border: 1px solid #d4b418;
-  width: 70%;
-  opacity: .9;
+  opacity: 0.9;
 }
 </style>

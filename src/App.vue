@@ -71,7 +71,6 @@ body {
 }
 
 #app {
-  min-height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 100%;
@@ -83,7 +82,7 @@ body {
 .main {
 	// margin-top: .3rem;
   border: 1px solid #efefef;
-  min-height: 500px;
+  min-height: calc(100vh - 48px);
   background: #fff;
 }
 

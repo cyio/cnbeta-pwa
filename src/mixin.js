@@ -12,6 +12,7 @@ export default {
     },
     goHome () {
       this.$router.push({ path: '/' })
+      document.title = 'Cnbeta Lite'
     },
     showLoading () {
       this.$root.$data.shared.loading = true
