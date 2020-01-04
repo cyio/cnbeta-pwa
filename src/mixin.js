@@ -11,8 +11,8 @@ export default {
       this.$router.push(path)
     },
     goHome () {
-      this.$router.push({ path: '/' })
-      document.title = 'Cnbeta Lite'
+      // this.$router.push({ path: '/' })
+      history.back() // savedPosition 参数，只有通过浏览器前进、后退时才可用
     },
     showLoading () {
       this.$root.$data.shared.loading = true

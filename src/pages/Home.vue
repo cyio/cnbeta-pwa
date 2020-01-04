@@ -68,7 +68,7 @@ export default {
         if (!listRes || !listRes.length) return
         this.listNew = listRes
         const isDiff = this.list[0].id !== this.listNew[0].id
-        if (1 || isDiff) {
+        if (isDiff) {
           this.handleDiff()
         }
       }
