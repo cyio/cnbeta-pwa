@@ -86,6 +86,18 @@ router.get('/api/image', async (ctx, next) => {
   // console.log(typeof ctx.body)
 })
 
+// 反向代理
+let proxy = new Router()
+proxy.get('/', async (ctx, next) => {
+  ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  ctx.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+
+  if (!ctx.query.url) return ctx.body = { msg: '缺少 url query' }
+  ctx.body = await axios.get(ctx.query.url).then(res => res.data)
+})
+router.use('/api/proxy', proxy.routes(), proxy.allowedMethods())
+
 app
   .use(router.routes())
   .use(router.allowedMethods())
