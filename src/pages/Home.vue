@@ -9,14 +9,10 @@
 <script>
 import mixin from '@/mixin.js'
 import axios from 'axios'
-import { handleBackButton } from '../utils'
+import { handleBackButton, inSleepTime } from '../utils'
 // axios.defaults.timeout = 1000 * 5
 let fetchCount = 0
 const maxFetchTimes = 15
-const inSleepTime = () => {
-  const h = new Date().getHours()
-  return h >= 0 && h <= 5
-}
 export default {
   name: 'List',
   mixins: [mixin],
@@ -112,7 +108,7 @@ export default {
   padding: 0 .8rem;
 }
 .list .item .link {
-  color: #333;
+  color: #000;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

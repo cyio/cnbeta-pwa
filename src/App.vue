@@ -16,14 +16,23 @@
     transition(name='fade', v-if='!$route.meta.keepAlive')
       router-view
   footer
+    .ink-check
+      input(type="checkbox" :checked="useInkDisplay" @change="onChange" value="使用显示优化")
+      label 墨水屏显示优化
     a(href='https://github.com/cyio/cnbeta-pwa', target='_blank') cyio/cnbeta-pwa
 </template>
 
 <script>
 import mixin from '@/mixin.js'
+// import { getUrlParameterByName } from './utils.js'
 export default {
   mixins: [mixin],
   name: 'app',
+  data () {
+    return {
+      useInkDisplay: false
+    }
+  },
   methods: {
     share () {
       navigator
@@ -34,17 +43,36 @@ export default {
         })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing', error))
+    },
+    onChange () {
+      this.useInkDisplay = !this.useInkDisplay
     }
   },
   computed: {
     isSupportWebShare () {
       return navigator.share
     }
+  },
+  watch: {
+    'useInkDisplay': function (val) {
+      document.documentElement.style.setProperty('--font-weight', val ? 'bold' : 'normal')
+      window.localStorage.setItem('useInkDisplay', val)
+    }
+  },
+  created () {
+    const useInkDisplay = window.localStorage.getItem('useInkDisplay')
+    if (useInkDisplay === 'true') {
+      this.useInkDisplay = useInkDisplay
+    }
   }
 }
 </script>
 
 <style lang="stylus">
+:root {
+  --font-size: 16;
+  --font-weight: normal;
+}
 a {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0); 
 	text-decoration-line: none;
@@ -68,6 +96,7 @@ ul {
 
 body {
   margin: 0;
+  font-weight var(--font-weight);
 }
 
 #app {
@@ -195,5 +224,11 @@ img, embed, iframe {
   top: .5rem;
   right: 1rem;
   z-index: 9999;
+}
+.ink-check {
+  label {
+    color: #000;
+    margin-left: 4px;
+  }
 }
 </style>

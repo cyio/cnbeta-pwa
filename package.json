@@ -9,7 +9,7 @@
     "dev:web": "node build/dev-server.js",
     "start": "node server",
     "build": "node build/build.js",
-    "-prepublish": "rm -rf ./dist && git clone --branch gh-pages --depth 1 https://github.com/cyio/cnbeta-pwa.git dist",
+    "prepublish": "rm -rf ./dist && git clone --branch gh-pages --depth 1 https://github.com/cyio/cnbeta-pwa.git dist",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {

@@ -18,8 +18,25 @@ function handleBackButton () {
   })
 }
 
+const inSleepTime = () => {
+  const h = new Date().getHours()
+  return h >= 0 && h <= 5
+}
+
+function getUrlParameterByName (name, url) {
+  if (!url) url = window.location.href
+  // name = name.replace(/[\[\]]/g, '\\$&')
+  const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`)
+  const results = regex.exec(url)
+  if (!results) return null
+  if (!results[2]) return ''
+  return decodeURIComponent(results[2].replace(/\+/g, ' '))
+}
+
 export {
   sleep,
   isMobile,
-  handleBackButton
+  handleBackButton,
+  inSleepTime,
+  getUrlParameterByName
 }
