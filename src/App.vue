@@ -152,6 +152,7 @@ footer a {
 
 img, embed, iframe {
   max-width: 100%;
+  object-fit: contain;
 }
 
 .expand-enter-active, .expand-leave-active {
