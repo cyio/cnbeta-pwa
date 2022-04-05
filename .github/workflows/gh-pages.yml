@@ -31,5 +31,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # publish_dir: ./docs/.vuepress/dist # 打包生成目录
+          publish_dir: ./dist
           # publish_branch: gh-pages # 推送分支
