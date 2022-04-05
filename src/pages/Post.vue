@@ -19,7 +19,7 @@ export default {
   methods: {
   },
   beforeRouteEnter (to, from, next) {
-    fetch(`/api/cnbeta/${to.params.id}`)
+    fetch(`https://vercel-server-bit.vercel.app/api/cnbeta/${to.params.id}`)
       .then(res => {
         if (res.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' + res.status)

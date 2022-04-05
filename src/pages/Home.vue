@@ -35,7 +35,7 @@ export default {
         return
       }
       fetchCount++
-      return axios.get('/api/cnbeta', { timeout: timeoutMs })
+      return axios.get('https://vercel-server-bit.vercel.app/api/cnbeta/list', { timeout: timeoutMs })
         .then(res => {
           this.msg = null
           this.hideLoading()
