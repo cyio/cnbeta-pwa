@@ -29,11 +29,11 @@ export default {
       return re.exec(url)[1]
     },
     getList (timeoutMs = 5000) {
-      if (inSleepTime()) {
-        this.msg = '应用休眠中，服务时间 6:00 - 24:00'
-        this.hideLoading()
-        return
-      }
+      // if (inSleepTime()) {
+        // this.msg = '应用休眠中，服务时间 6:00 - 24:00'
+        // this.hideLoading()
+        // return
+      // }
       fetchCount++
       return axios.get('https://vercel-server-bit.vercel.app/api/cnbeta/list', { timeout: timeoutMs })
         .then(res => {

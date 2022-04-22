@@ -1,6 +1,6 @@
 # cnbeta-pwa
 
-线上访问：[Cnbeta Lite](http://cnbeta.oaker.bid/)
+线上访问：[Cnbeta Lite](https://cnbeta.oaker.bid/)
 
 ## 说明
 
