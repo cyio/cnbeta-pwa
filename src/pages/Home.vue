@@ -9,7 +9,7 @@
 <script>
 import mixin from '@/mixin.js'
 import axios from 'axios'
-import { handleBackButton, inSleepTime } from '../utils'
+import { handleBackButton } from '../utils'
 // axios.defaults.timeout = 1000 * 5
 let fetchCount = 0
 const maxFetchTimes = 15
@@ -30,9 +30,9 @@ export default {
     },
     getList (timeoutMs = 5000) {
       // if (inSleepTime()) {
-        // this.msg = '应用休眠中，服务时间 6:00 - 24:00'
-        // this.hideLoading()
-        // return
+      // this.msg = '应用休眠中，服务时间 6:00 - 24:00'
+      // this.hideLoading()
+      // return
       // }
       fetchCount++
       return axios.get('https://vercel-server-bit.vercel.app/api/cnbeta/list', { timeout: timeoutMs })

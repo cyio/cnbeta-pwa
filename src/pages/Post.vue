@@ -36,6 +36,7 @@ export default {
     loading (value) {
       if (!value) {
         setTimeout(() => {
+          // 等渲染完获取标题，不能用 nextTick，nextTick 在渲染前
           document.title = document.querySelector('.post-view .title').innerText
         }, 0)
       }
