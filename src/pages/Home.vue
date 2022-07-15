@@ -51,7 +51,7 @@ export default {
 
           if (fetchCount <= maxFetchTimes) {
             this.msg = `服务器连接超时，正在重试(${fetchCount})`
-            this.list = await this.getList(1500)
+            this.list = await this.getList()
           } else {
             this.msg = '服务器连接失败, 请稍后再访问'
             this.hideLoading()
