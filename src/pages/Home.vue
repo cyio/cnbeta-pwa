@@ -10,9 +10,7 @@
 import mixin from '@/mixin.js'
 import axios from 'axios'
 import { handleBackButton } from '../utils'
-// axios.defaults.timeout = 1000 * 5
-let fetchCount = 0
-const maxFetchTimes = 15
+
 export default {
   name: 'List',
   mixins: [mixin],
@@ -28,14 +26,8 @@ export default {
       const re = /view\/(\w*)\.htm/
       return re.exec(url)[1]
     },
-    getList (timeoutMs = 5000) {
-      // if (inSleepTime()) {
-      // this.msg = '应用休眠中，服务时间 6:00 - 24:00'
-      // this.hideLoading()
-      // return
-      // }
-      fetchCount++
-      return axios.get('https://vercel-server-bit.vercel.app/api/cnbeta/list', { timeout: timeoutMs })
+    getList () {
+      return axios.get('https://vercel-server-bit.vercel.app/api/cnbeta/list')
         .then(res => {
           this.msg = null
           this.hideLoading()
@@ -46,15 +38,6 @@ export default {
           if (/400|503/.test(err.status)) {
             console.log('Looks like there was a problem. Status Code: ' + err.status)
             this.msg = `${err.status}: ${err.message}`
-            return
-          }
-
-          if (fetchCount <= maxFetchTimes) {
-            this.msg = `服务器连接超时，正在重试(${fetchCount})`
-            this.list = await this.getList()
-          } else {
-            this.msg = '服务器连接失败, 请稍后再访问'
-            this.hideLoading()
           }
         })
     },
