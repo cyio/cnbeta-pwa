@@ -129,6 +129,7 @@ header {
   top: 0;
   width: 100%;
   border: 1px solid #d0d0d0;
+  box-sizing: border-box;
 }
 
 header .title {
